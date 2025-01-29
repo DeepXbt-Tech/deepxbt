@@ -1,3 +1,31 @@
+// Set proxy URL for development environment
+if (process.env.NODE_ENV === 'development') {
+  // 设置 Node.js 全局代理（需要在任何导入之前设置）
+  process.env.HTTP_PROXY = 'http://127.0.0.1:7890';
+  process.env.HTTPS_PROXY = 'http://127.0.0.1:7890';
+  process.env.http_proxy = 'http://127.0.0.1:7890';
+  process.env.https_proxy = 'http://127.0.0.1:7890';
+}
+
+import { bootstrap } from 'global-agent';
+
+// 初始化 global-agent
+if (process.env.NODE_ENV === 'development') {
+  // 设置 global-agent 代理
+  process.env.GLOBAL_AGENT_HTTP_PROXY = 'http://127.0.0.1:7890';
+  process.env.GLOBAL_AGENT_HTTPS_PROXY = 'http://127.0.0.1:7890';
+  
+  bootstrap();
+  
+  console.log('Proxy settings:', {
+    NODE_ENV: process.env.NODE_ENV,
+    GLOBAL_AGENT_HTTP_PROXY: process.env.GLOBAL_AGENT_HTTP_PROXY,
+    GLOBAL_AGENT_HTTPS_PROXY: process.env.GLOBAL_AGENT_HTTPS_PROXY,
+    HTTP_PROXY: process.env.HTTP_PROXY,
+    HTTPS_PROXY: process.env.HTTPS_PROXY
+  });
+}
+
 import { DirectClient } from "@elizaos/client-direct";
 import {
   AgentRuntime,

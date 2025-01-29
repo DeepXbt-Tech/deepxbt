@@ -1,4 +1,4 @@
-import { settings } from "@elizaos/core";
+import { settings, stringToUuid } from "@elizaos/core";
 import readline from "readline";
 
 const rl = readline.createInterface({
@@ -42,7 +42,7 @@ async function handleUserInput(input, agentId) {
 
 export function startChat(characters) {
   function chat() {
-    const agentId = characters[0].name ?? "Agent";
+    const agentId = stringToUuid(characters[0].name);
     rl.question("You: ", async (input) => {
       await handleUserInput(input, agentId);
       if (input.toLowerCase() !== "exit") {
